@@ -82,13 +82,15 @@ iface eth0 inet static
  <br>
  
  <br>
- Karena Loguetown dan Alabasta digunakan sebagai client, install dnsutils
+ Karena Loguetown dan Alabasta digunakan sebagai client, install dnsutils. Setelah itu ganti nameservernya.
  <br>
  
  ```
 apt-get update
 apt-get install nano -y
 apt-get install dnsutils
+echo nameserver 10.48.2.2 > /etc/resolv.conf
+echo nameserver 10.48.2.3 >> /etc/resolv.conf
  ```
  <br>
  
@@ -263,6 +265,63 @@ jika sudah, bisa ditest dengan ```host -t PTR 10.48.2.2```
 ## Soal 5
 Supaya tetap bisa menghubungi Franky jika server EniesLobby rusak, maka buat Water7 sebagai DNS Slave untuk domain utama.
 ### Penyelesaian
+#### EniesLobby
+tambahkan 3 line baru pada ```/etc/bind/named.conf.local``` untuk mengkonfigurasi DNS Slave ke Water7
+```
+notify yes;
+        also-notify { 10.48.2.3; };
+        allow-transfer { 10.48.2.3; };
+```
+```
+//
+// Do any local configuration here
+//
+
+// Consider adding the 1918 zones here, if they are not used in your
+// organization
+//include "/etc/bind/zones.rfc1918";
+zone "franky.t13.com" {
+        type master;
+        notify yes;
+        also-notify { 10.48.2.3; };
+        allow-transfer { 10.48.2.3; };
+        file "/etc/bind/kaizoku/franky.t13.com";
+};
+zone "2.48.10.in-addr.arpa" {
+    type master;
+    file "/etc/bind/kaizoku/2.48.10.in-addr.arpa";
+};
+```
+kemudian untuk mengetes DNS slave, matikan bind9 pada EniesLobby dengan ```service bind9 stop```
+
+
+#### Water7
+Pastikan sudah menginstall bind9 seperti yang sudah dijelaskan di no 1. 
+<br>
+Tambahkan zone franky.t13.com pada ```/etc/bind/named.conf.local``` dengan masters mengarah ke IP EniesLobby
+```
+//
+// Do any local configuration here
+//
+
+// Consider adding the 1918 zones here, if they are not used in your
+// organization
+//include "/etc/bind/zones.rfc1918";
+
+zone "franky.t13.com" {
+    type slave;
+    masters { 10.48.2.2; }; // Masukan IP EniesLobby tanpa tanda petik
+    file "/var/lib/bind/franky.t13.com";
+};
+```
+Kemudian restart bind9 
+```service bind9 restart```
+<br>
+
+#### Alabasta/Loguetown
+Jika sudah menyalakan service bind9 pada Water7 dan mematikan bind9 pada EniesLobby, lakukan ping pada server Alabasta/Loguetown
+
+
 
 ## Soal 6
 Setelah itu terdapat subdomain mecha.franky.yyy.com dengan alias www.mecha.franky.yyy.com yang didelegasikan dari EniesLobby ke Water7 dengan IP menuju ke Skypie dalam folder sunnygo.
