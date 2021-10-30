@@ -326,6 +326,99 @@ Jika sudah menyalakan service bind9 pada Water7 dan mematikan bind9 pada EniesLo
 ## Soal 6
 Setelah itu terdapat subdomain mecha.franky.yyy.com dengan alias www.mecha.franky.yyy.com yang didelegasikan dari EniesLobby ke Water7 dengan IP menuju ke Skypie dalam folder sunnygo.
 ### Penyelesaian
+#### EniesLobby
+tambahkan 2 line pada ```/etc/bind/kaizoku/franky.t13.com```
+```
+ns1     IN      A       10.48.2.3
+mecha   IN      NS      ns1
+```
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     franky.t13.com. root.franky.t13.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      franky.t13.com.
+@       IN      A       10.48.2.2
+@       IN      AAAA    ::1
+www     IN      CNAME   franky.t13.com.
+super   IN      A       10.48.2.4
+www.super     IN      CNAME   super.franky.t13.com.
+ns1     IN      A       10.48.2.3
+mecha   IN      NS      ns1
+```
+Kemudian pada ```/etc/bind/named.conf.options```, 
+comment line 
+```dnssec-validation auto;```
+dan tambahkan line
+```allow-query{any;};```
+<br>
+Kemudian restart bind9 ```service bind9 restart```
+
+#### Water7
+Lakukan hal yang sama pada ```/etc/bind/named.conf.options```, 
+comment line 
+```dnssec-validation auto;```
+dan tambahkan line
+```allow-query{any;};```
+
+kemudian tambahkan zone untuk delegasi subdomain pada ```/etc/bind/named.conf.local```
+```
+zone "mecha.franky.t13.com" {
+    type master;
+    file "/etc/bind/sunnygo/mecha.franky.t13.com";
+};
+```
+```
+//
+// Do any local configuration here
+//
+
+// Consider adding the 1918 zones here, if they are not used in your
+// organization
+//include "/etc/bind/zones.rfc1918";
+
+zone "franky.t13.com" {
+    type slave;
+    masters { 10.48.2.2; }; // Masukan IP EniesLobby tanpa tanda petik
+    file "/var/lib/bind/franky.t13.com";
+};
+
+zone "mecha.franky.t13.com" {
+    type master;
+    file "/etc/bind/sunnygo/mecha.franky.t13.com";
+};
+```
+karena mintanya folder sunnygo, buat folder baru dengan ```mkdir /etc/bind/sunnygo```
+<br>
+kemudian tambahkan file konfigurasi pada ```/etc/bind/sunnygo/mecha.franky.t13.com```
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     mecha.franky.t13.com. root.mecha.franky.t13.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      mecha.franky.t13.com.
+@       IN      A       10.48.2.4
+www     IN      CNAME   mecha.franky.t13.com.
+```
+Kemudian restart bind9 ```service bind9 restart```
+
+#### Alabasta/Loguetown
+jika sudah, lakukan test dengan ```ping www.mecha.franky.t13.com```, ```ping mecha.franky.t13.com```, dan ```host -t CNAME www.mecha.franky.t13.com```
+
 
 ## Soal 7
 Untuk memperlancar komunikasi Luffy dan rekannya, dibuatkan subdomain melalui Water7 dengan nama general.mecha.franky.yyy.com dengan alias www.general.mecha.franky.yyy.com yang mengarah ke Skypie.
