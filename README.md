@@ -231,6 +231,33 @@ Jika sudah bisa langsung testing
 ## Soal 4
 Buat juga reverse domain untuk domain utama.
 ### Penyelesaian
+#### EniesLobby
+tambahkan zone baru  pada ```/etc/bind/named.conf.local```
+```
+zone "2.48.10.in-addr.arpa" {
+    type master;
+    file "/etc/bind/kaizoku/2.48.10.in-addr.arpa";
+};
+```
+kemudian buat file konfigurasinya di ```/etc/bind/kaizoku/2.48.10.in-addr.arpa```
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     franky.t13.com. root.franky.t13.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+2.48.10.in-addr.arpa.   IN      NS      franky.t13.com.
+2                       IN      PTR     franky.t13.com.
+```
+#### Alabasta/Loguetown
+jika sudah, bisa ditest dengan ```host -t PTR 10.48.2.2```
+
 
 
 ## Soal 5
