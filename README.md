@@ -714,6 +714,22 @@ Lakukan test menggunakan ```lynx www.general.mecha.franky.t13.com:15000``` dan `
 ## Soal 16
 Dan setiap kali mengakses IP Skypie akan dialihkan secara otomatis ke www.franky.yyy.com.
 ### Penyelesaian
+#### Skypie
+Karena mengakses IP, maka lakukan konfigurasi pada ```/etc/apache2/sites-available/000-default.conf```. tambahkan konfigurasi:
+```
+Redirect 301 / http://www.franky.t13.com
+```
+agar nantinya langsung keredirect.
+<br>
+enable konfigurasi dengan ```a2ensite 000-default.conf```
+<br>
+restart apache 
+
+```service apache2 restart```
+
+#### Alabasta/Loguetown
+Lakukan test ```lynx 10.48.2.4```. Jika benar maka akan menampilkan halaman yang sama dengan www.franky.t13.com
+
 
 ## Soal 17
 Dikarenakan Franky juga ingin mengajak temannya untuk dapat menghubunginya melalui website www.super.franky.yyy.com, dan dikarenakan pengunjung web server pasti akan bingung dengan randomnya images yang ada, maka Franky juga meminta untuk mengganti request gambar yang memiliki substring “franky” akan diarahkan menuju franky.png.
