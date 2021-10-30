@@ -455,6 +455,68 @@ jika sudah, lakukan test dengan ```ping www.general.mecha.franky.t13.com```, ```
 ## Soal 8
 Setelah melakukan konfigurasi server, maka dilakukan konfigurasi Webserver. Pertama dengan webserver www.franky.yyy.com. Pertama, luffy membutuhkan webserver dengan DocumentRoot pada /var/www/franky.yyy.com.
 ### Penyelesaian
+Sebelumnya pastikan install2 pada nomor 1 sudah dijalankan
+#### EniesLobby
+Record A dan PTR pada ```/etc/bind/kaizoku/franky.t13.com``` sudah harus mengarah ke IP Skypie (10.48.2.4)
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     franky.t13.com. root.franky.t13.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      franky.t13.com.
+@       IN      A       10.48.2.4
+@       IN      AAAA    ::1
+www     IN      CNAME   franky.t13.com.
+super   IN      A       10.48.2.4
+www.super     IN      CNAME   super.franky.t13.com.
+ns1     IN      A       10.48.2.3
+mecha   IN      NS      ns1
+```
+#### Skypie
+Buat file konfigurasi baru pada ```/etc/apache2/sites-available/franky.t13.com.conf```. Atur DocumentRoot sesuai permintaan soal.
+```
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/franky.t13.com
+        ServerName franky.t13.com
+        ServerAlias www.franky.t13.com
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+</VirtualHost>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+```
+Enable konfigurasinya dengan ```a2ensite franky.t13.com```, lalu restart apache ```service apache2 restart```
+<br>
+Kemudian, karena file yang ditentukan berada di github, install dan konfigurasi github dahulu agar bisa melakukan git clone. Setelah itu, unzip dan pindah ke /var/www. Jangan lupa tambahkan .com pada akhir nama foldernya.
+```
+apt-get install unzip -y
+apt-get install git -y
+git config --global http.sslVerify false
+git clone https://github.com/FeinardSlim/Praktikum-Modul-2-Jarkom.git
+unzip /root/Praktikum-Modul-2-Jarkom/franky.zip
+unzip /root/Praktikum-Modul-2-Jarkom/general.mecha.franky.zip
+unzip /root/Praktikum-Modul-2-Jarkom/super.franky.zip
+cp -r /root/franky /var/www
+cp -r /root/general.mecha.franky /var/www
+cp -r /root/super.franky /var/www
+mv /var/www/franky /var/www/franky.t13.com
+mv /var/www/general.mecha.franky /var/www/general.mecha.franky.t13.com
+mv /var/www/super.franky /var/www/super.franky.t13.com
+```
+
+#### Alabasta/Loguetown
+lakukan test dengan ```lynx franky.t13.com``` dan ```www.franky.t13.com```. hasilnya akan menampilkan halaman yang sama.
+
 
 ## Soal 9
 Setelah itu, Luffy juga membutuhkan agar url www.franky.yyy.com/index.php/home dapat menjadi menjadi www.franky.yyy.com/home. 
