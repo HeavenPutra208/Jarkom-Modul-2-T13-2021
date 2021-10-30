@@ -521,6 +521,32 @@ lakukan test dengan ```lynx franky.t13.com``` dan ```www.franky.t13.com```. hasi
 ## Soal 9
 Setelah itu, Luffy juga membutuhkan agar url www.franky.yyy.com/index.php/home dapat menjadi menjadi www.franky.yyy.com/home. 
 ### Penyelesaian
+#### Skypie
+Tambahkan konfigurasi pada ```/etc/apache2/sites-available/franky.t13.com.conf```
+```
+<Directory /var/www/franky.t13.com>
+                Options +FollowSymLinks -Multiviews
+                AllowOverride All
+        </Directory>
+```
+```AllowOverride All``` ditambahkan agar konfigurasi .htaccess dapat berjalan.
+<br>
+```+FollowSymLinks``` ditambahkan agar konfigurasi mod_rewrite dapat berjalan.
+<br>
+```-Multiviews``` ditambahkan agar konfigurasi mod_negotiation tidak dapat berjalan. mod_negotiation bisa 'rewrite' requests sehingga menimpa dan mengganggu mod_rewrite.
+<br>
+Tambahkan file .htaccess pada ```/var/www/franky.t13.com/.htaccess``` kemudian isi dengan rewrite rule:
+```
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule (.*) /index.php/$1 [L]
+```
+Pada rewrite condition, request akan dicek apakah requestnya akan ke fila (-f) atau direktori (-d), jika kondisinya terpenuhi maka RewriteRule akan dijalankan. Rule ini akan meredirect /home ke /index.php/$1 ,  di mana $1 adalah home.
+
+#### Alabasta/Loguetown
+Jika sudah, bisa test menggunakan ```lynx www.franky.t13.com/home```. Jika benar akan diperlihatkan isi file ```/var/www/franky.t13.com/home.html```
+
 
 ## Soal 10
 Setelah itu, pada subdomain www.super.franky.yyy.com, Luffy membutuhkan penyimpanan aset yang memiliki DocumentRoot pada /var/www/super.franky.yyy.com.
