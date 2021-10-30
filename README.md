@@ -228,7 +228,9 @@ Jika sudah bisa langsung testing
 
 ```host -t CNAME www.super.franky.t13.com```
 
-
+<br>
+<img width="500" src="https://github.com/HeavenPutra208/Jarkom-Modul-2-T13-2021/blob/main/Img/3.jpg" />
+<br>
 
 ## Soal 4
 Buat juga reverse domain untuk domain utama.
@@ -260,6 +262,9 @@ $TTL    604800
 #### Alabasta/Loguetown
 jika sudah, bisa ditest dengan ```host -t PTR 10.48.2.2```
 
+<br>
+<img width="500" src="https://github.com/HeavenPutra208/Jarkom-Modul-2-T13-2021/blob/main/Img/4.jpg" />
+<br>
 
 
 ## Soal 5
@@ -316,11 +321,19 @@ zone "franky.t13.com" {
 ```
 Kemudian restart bind9 
 ```service bind9 restart```
+
 <br>
+<img width="500" src="https://github.com/HeavenPutra208/Jarkom-Modul-2-T13-2021/blob/main/Img/5.jpg" />
+<br>
+
 
 #### Alabasta/Loguetown
 Jika sudah menyalakan service bind9 pada Water7 dan mematikan bind9 pada EniesLobby, lakukan ping pada server Alabasta/Loguetown
 
+
+<br>
+<img width="500" src="https://github.com/HeavenPutra208/Jarkom-Modul-2-T13-2021/blob/main/Img/5.1.jpg" />
+<br>
 
 
 ## Soal 6
@@ -419,6 +432,9 @@ Kemudian restart bind9 ```service bind9 restart```
 #### Alabasta/Loguetown
 jika sudah, lakukan test dengan ```ping www.mecha.franky.t13.com```, ```ping mecha.franky.t13.com```, dan ```host -t CNAME www.mecha.franky.t13.com```
 
+<br>
+<img width="500" src="https://github.com/HeavenPutra208/Jarkom-Modul-2-T13-2021/blob/main/Img/6.jpg" />
+<br>
 
 ## Soal 7
 Untuk memperlancar komunikasi Luffy dan rekannya, dibuatkan subdomain melalui Water7 dengan nama general.mecha.franky.yyy.com dengan alias www.general.mecha.franky.yyy.com yang mengarah ke Skypie.
@@ -451,6 +467,9 @@ Kemudian restart bind9 ```service bind9 restart```
 #### Alabasta/Loguetown
 jika sudah, lakukan test dengan ```ping www.general.mecha.franky.t13.com```, ```ping general.mecha.franky.t13.com```, dan ```host -t CNAME www.general.mecha.franky.t13.com```
 
+<br>
+<img width="500" src="https://github.com/HeavenPutra208/Jarkom-Modul-2-T13-2021/blob/main/Img/7.jpg" />
+<br>
 
 ## Soal 8
 Setelah melakukan konfigurasi server, maka dilakukan konfigurasi Webserver. Pertama dengan webserver www.franky.yyy.com. Pertama, luffy membutuhkan webserver dengan DocumentRoot pada /var/www/franky.yyy.com.
@@ -517,6 +536,9 @@ mv /var/www/super.franky /var/www/super.franky.t13.com
 #### Alabasta/Loguetown
 lakukan test dengan ```lynx franky.t13.com``` dan ```www.franky.t13.com```. hasilnya akan menampilkan halaman yang sama.
 
+<br>
+<img width="500" src="https://github.com/HeavenPutra208/Jarkom-Modul-2-T13-2021/blob/main/Img/8.jpg" />
+<br>
 
 ## Soal 9
 Setelah itu, Luffy juga membutuhkan agar url www.franky.yyy.com/index.php/home dapat menjadi menjadi www.franky.yyy.com/home. 
@@ -547,6 +569,9 @@ Pada rewrite condition, request akan dicek apakah requestnya akan ke fila (-f) a
 #### Alabasta/Loguetown
 Jika sudah, bisa test menggunakan ```lynx www.franky.t13.com/home```. Jika benar akan diperlihatkan isi file ```/var/www/franky.t13.com/home.html```
 
+<br>
+<img width="500" src="https://github.com/HeavenPutra208/Jarkom-Modul-2-T13-2021/blob/main/Img/9.jpg" />
+<br>
 
 ## Soal 10
 Setelah itu, pada subdomain www.super.franky.yyy.com, Luffy membutuhkan penyimpanan aset yang memiliki DocumentRoot pada /var/www/super.franky.yyy.com.
@@ -575,6 +600,9 @@ Jangan lupa enable konfigurasi dengan ```a2ensite super.franky.t13.com``` dan re
 #### Alabasta/Loguetown
 Jika sudah, lakukan test dengan ```lynx www.super.franky.t13.com```
 
+<br>
+<img width="500" src="https://github.com/HeavenPutra208/Jarkom-Modul-2-T13-2021/blob/main/Img/10.jpg" />
+<br>
 
 ## Soal 11
 Akan tetapi, pada folder /public, Luffy ingin hanya dapat melakukan directory listing saja.
@@ -591,6 +619,9 @@ restart apache ```service apache2 restart```
 #### Alabasta/Loguetown
 Jika sudah, lakukan test dengan ```lynx www.super.franky.t13.com/public```. Jika benar akan menampilkan directory listing pada folder /public
 
+<br>
+<img width="500" src="https://github.com/HeavenPutra208/Jarkom-Modul-2-T13-2021/blob/main/Img/11.jpg" />
+<br>
 
 ## Soal 12
 Tidak hanya itu, Luffy juga menyiapkan error file 404.html pada folder /error untuk mengganti error kode pada apache.
@@ -614,6 +645,9 @@ restart apache ```service apache2 restart```
 #### Alabasta/Loguetown
 Lakukan testing dengan sengaja mengakses link sudah pasti mengarah ke 404, misalnya ```lynx www.super.franky.t13.com/publics```. Jika benar akan muncul pesan seperti ini
 
+<br>
+<img width="500" src="https://github.com/HeavenPutra208/Jarkom-Modul-2-T13-2021/blob/main/Img/12.jpg" />
+<br>
 
 ## Soal 13
 Luffy juga meminta Nami untuk dibuatkan konfigurasi virtual host. Virtual host ini bertujuan untuk dapat mengakses file asset www.super.franky.yyy.com/public/js menjadi www.super.franky.yyy.com/js.
@@ -628,6 +662,9 @@ Jangan lupa restart apache ```service apache2 restart```
 #### Alabasta/Loguetown
 Gunakan ```lynx www.super.franky.t13.com/js```. Jika berhasil maka akan terlihat seperti ini
 
+<br>
+<img width="500" src="https://github.com/HeavenPutra208/Jarkom-Modul-2-T13-2021/blob/main/Img/13.jpg" />
+<br>
 
 ## Soal 14
 Dan Luffy meminta untuk web www.general.mecha.franky.yyy.com hanya bisa diakses dengan port 15000 dan port 15500.
@@ -685,6 +722,9 @@ restart apache
 #### Alabasta/Loguetown
 Lakukan test menggunakan ```lynx www.general.mecha.franky.t13.com:15000``` dan ```lynx www.general.mecha.franky.t13.com:15500```. Jika benar, maka akan keluar hasil yang sama. 
 
+<br>
+<img width="500" src="https://github.com/HeavenPutra208/Jarkom-Modul-2-T13-2021/blob/main/Img/14.jpg" />
+<br>
 
 
 ## Soal 15
@@ -709,7 +749,13 @@ restart apache
 #### Alabasta/Loguetown
 Lakukan test menggunakan ```lynx www.general.mecha.franky.t13.com:15000``` dan ```lynx www.general.mecha.franky.t13.com:15500```. Jika benar, nanti akan disuruh memasukkan username dan password sebelum diarahkan ke web
 
+<br>
+<img width="500" src="https://github.com/HeavenPutra208/Jarkom-Modul-2-T13-2021/blob/main/Img/15.jpg" />
+<br>
 
+<br>
+<img width="500" src="https://github.com/HeavenPutra208/Jarkom-Modul-2-T13-2021/blob/main/Img/15.1.jpg" />
+<br>
 
 ## Soal 16
 Dan setiap kali mengakses IP Skypie akan dialihkan secara otomatis ke www.franky.yyy.com.
@@ -730,6 +776,9 @@ restart apache
 #### Alabasta/Loguetown
 Lakukan test ```lynx 10.48.2.4```. Jika benar maka akan menampilkan halaman yang sama dengan www.franky.t13.com
 
+<br>
+<img width="500" src="https://github.com/HeavenPutra208/Jarkom-Modul-2-T13-2021/blob/main/Img/16.jpg" />
+<br>
 
 ## Soal 17
 Dikarenakan Franky juga ingin mengajak temannya untuk dapat menghubunginya melalui website www.super.franky.yyy.com, dan dikarenakan pengunjung web server pasti akan bingung dengan randomnya images yang ada, maka Franky juga meminta untuk mengganti request gambar yang memiliki substring “franky” akan diarahkan menuju franky.png.
@@ -748,7 +797,9 @@ restart apache
 #### Alabasta/Loguetown
 Lakukan test menggunakan ```lynx www.super.franky.t13.com/public/images/PEPEGASfranky```. Jika benar maka akan ada prompt untuk download.
 
-
+<br>
+<img width="500" src="https://github.com/HeavenPutra208/Jarkom-Modul-2-T13-2021/blob/main/Img/17.jpg" />
+<br>
 
 ## Kendala yang Dialami
 1. file /root/script.sh nya sempat error. Murni kesalahan saya karena beberapa command tidak menggunakan absolute path. Sisanya, aman.
