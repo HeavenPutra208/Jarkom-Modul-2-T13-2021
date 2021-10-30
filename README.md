@@ -632,6 +632,60 @@ Gunakan ```lynx www.super.franky.t13.com/js```. Jika berhasil maka akan terlihat
 ## Soal 14
 Dan Luffy meminta untuk web www.general.mecha.franky.yyy.com hanya bisa diakses dengan port 15000 dan port 15500.
 ### Penyelesaian
+#### SKypie
+Buat file konfigurasi baru ```/etc/apache2/sites-available/general.mecha.franky.t13.com.conf``` . Ganti virtual hostnya dengan 15000 dan 15500. Atur DocumentRoot sesuai dengan permintaan soal. Untuk direktori document root tadi sudah kita buat saat unzip melalui github pada soal 8
+```
+<VirtualHost *:15000> 
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/general.mecha.franky.t13.com
+        ServerName general.mecha.franky.t13.com
+        ServerAlias www.general.mecha.franky.t13.com
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
+<VirtualHost *:15500>  
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/general.mecha.franky.t13.com
+        ServerName general.mecha.franky.t13.com
+        ServerAlias www.general.mecha.franky.t13.com
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+```
+enable konfigurasi dengan ```a2ensite general.mecha.franky.t13.com```.
+<br>
+karena menggunakan port 15000 dan 15500, atur ```/etc/apache2/ports.conf``` agar melakukan listen pada port tersebut
+```
+# If you just change the port or add more ports here, you will likely also
+# have to change the VirtualHost statement in
+# /etc/apache2/sites-enabled/000-default.conf
+
+Listen 80
+Listen 15000
+Listen 15500
+<IfModule ssl_module>
+        Listen 443
+</IfModule>
+
+<IfModule mod_gnutls.c>
+        Listen 443
+</IfModule>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+``` 
+<br>
+restart apache 
+
+```service apache2 restart```
+
+#### Alabasta/Loguetown
+Lakukan test menggunakan ```lynx www.general.mecha.franky.t13.com:15000``` dan ```lynx www.general.mecha.franky.t13.com:15500```. Jika benar, maka akan keluar hasil yang sama. 
+
+
 
 ## Soal 15
 dengan autentikasi username luffy dan password onepiece dan file di /var/www/general.mecha.franky.yyy
