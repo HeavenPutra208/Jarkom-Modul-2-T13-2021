@@ -579,6 +579,18 @@ Jika sudah, lakukan test dengan ```lynx www.super.franky.t13.com```
 ## Soal 11
 Akan tetapi, pada folder /public, Luffy ingin hanya dapat melakukan directory listing saja.
 ### Penyelesaian
+#### Skypie
+Tambah konfigurasi pada ```/etc/apache2/sites-available/super.franky.t13.com.conf```. ```+Indexes``` digunakan agar dapat melakukan directory listing pada folder /public
+```
+	<Directory /var/www/super.franky.t13.com/public>
+                Options +Indexes
+        </Directory>
+```
+restart apache ```service apache2 restart```
+
+#### Alabasta/Loguetown
+Jika sudah, lakukan test dengan ```lynx www.super.franky.t13.com/public```. Jika benar akan menampilkan directory listing pada folder /public
+
 
 ## Soal 12
 Tidak hanya itu, Luffy juga menyiapkan error file 404.html pada folder /error untuk mengganti error kode pada apache.
