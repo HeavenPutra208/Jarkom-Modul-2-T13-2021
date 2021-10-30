@@ -690,6 +690,26 @@ Lakukan test menggunakan ```lynx www.general.mecha.franky.t13.com:15000``` dan `
 ## Soal 15
 dengan autentikasi username luffy dan password onepiece dan file di /var/www/general.mecha.franky.yyy
 ### Penyelesaian
+#### Skypie
+Tambah konfigurasi untuk auth pada ```/etc/apache2/sites-available/general.mecha.franky.t13.com.conf```
+```
+	<Directory "/var/www/general.mecha.franky.t13.com">
+                AuthType Basic
+                AuthName "Restricted Content"
+                AuthUserFile /etc/apache2/.htpasswd
+                Require valid-user
+        </Directory>
+```
+Kemudian set kredensial dengan ```htpasswd -c /etc/apache2/.htpasswd luffy -b onepiece```
+<br>
+restart apache 
+
+```service apache2 restart```
+
+#### Alabasta/Loguetown
+Lakukan test menggunakan ```lynx www.general.mecha.franky.t13.com:15000``` dan ```lynx www.general.mecha.franky.t13.com:15500```. Jika benar, nanti akan disuruh memasukkan username dan password sebelum diarahkan ke web
+
+
 
 ## Soal 16
 Dan setiap kali mengakses IP Skypie akan dialihkan secara otomatis ke www.franky.yyy.com.
