@@ -551,6 +551,30 @@ Jika sudah, bisa test menggunakan ```lynx www.franky.t13.com/home```. Jika benar
 ## Soal 10
 Setelah itu, pada subdomain www.super.franky.yyy.com, Luffy membutuhkan penyimpanan aset yang memiliki DocumentRoot pada /var/www/super.franky.yyy.com.
 ### Penyelesaian
+#### Skypie
+Buat file konfigurasi baru ```/etc/apache2/sites-available/super.franky.t13.com.conf``` . Atur DocumentRoot sesuai dengan permintaan soal. Untuk direktori document root tadi sudah kita buat saat unzip melalui github pada soal 8
+```
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/super.franky.t13.com
+        ServerName super.franky.t13.com
+        ServerAlias www.super.franky.t13.com
+	
+	<Directory /var/www/super.franky.t13.com>
+                Options +FollowSymLinks -Multiviews
+		AllowOverride All
+        </Directory>
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+</VirtualHost>
+```
+Jangan lupa enable konfigurasi dengan ```a2ensite super.franky.t13.com``` dan restart apache ```service apache2 restart```
+
+#### Alabasta/Loguetown
+Jika sudah, lakukan test dengan ```lynx www.super.franky.t13.com```
+
 
 ## Soal 11
 Akan tetapi, pada folder /public, Luffy ingin hanya dapat melakukan directory listing saja.
