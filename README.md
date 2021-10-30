@@ -168,6 +168,47 @@ apt-get install libapache2-mod-php7.0
 ## Soal 2
 Luffy ingin menghubungi Franky yang berada di EniesLobby dengan denden mushi. Kalian diminta Luffy untuk membuat website utama dengan mengakses franky.yyy.com dengan alias www.franky.yyy.com pada folder kaizoku.
 ### Penyelesaian
+#### EniesLobby
+gunakan ```nano /etc/bind/named.conf.local``` untuk menambah franky.t13.com pada file konfigurasi
+```
+zone "franky.t13.com" {
+        type master;
+        file "/etc/bind/kaizoku/franky.t13.com";
+};
+```
+buat folder baru dengan ```mkdir /etc/bind/kaizoku``` lalu tambahkan file konfigurasi
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     franky.t13.com. root.franky.t13.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      franky.t13.com.
+@       IN      A       10.48.2.2
+```
+restart bind9 ```service bind9 restart```
+
+#### Alabasta/Loguetown
+Jangan lupa jalankan install2 pada soal no 1. Jika sudah bisa langsung testing
+
+```ping franky.t13.com```
+
+![image](https://user-images.githubusercontent.com/73151823/139532512-30a34141-c360-4741-a946-e92a8682a522.png)
+
+```ping www.franky.t13.com```
+
+![image](https://user-images.githubusercontent.com/73151823/139532546-5c52bef0-1f26-4470-ae11-b9921e7f717e.png)
+
+```host -t CNAME www.franky.t13.com```
+
+![image](https://user-images.githubusercontent.com/73151823/139532590-31360a14-ce00-4129-9f4f-23560c972e75.png)
+
 
 ## Soal 3
 Setelah itu buat subdomain super.franky.yyy.com dengan alias www.super.franky.yyy.com yang diatur DNS nya di EniesLobby dan mengarah ke Skypie.
