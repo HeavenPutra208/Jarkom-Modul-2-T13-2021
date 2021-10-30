@@ -734,6 +734,21 @@ Lakukan test ```lynx 10.48.2.4```. Jika benar maka akan menampilkan halaman yang
 ## Soal 17
 Dikarenakan Franky juga ingin mengajak temannya untuk dapat menghubunginya melalui website www.super.franky.yyy.com, dan dikarenakan pengunjung web server pasti akan bingung dengan randomnya images yang ada, maka Franky juga meminta untuk mengganti request gambar yang memiliki substring “franky” akan diarahkan menuju franky.png.
 ### Penyelesaian
+Edit file .htaccess pada ```/var/www/super.franky.t13.com/.htaccess```, tambahkan rewrite rule:
+```
+ErrorDocument 404 /error/404.html
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^public/images/.*franky.*$ public/images/franky.png [NC,L]
+```
+restart apache 
+
+```service apache2 restart```
+
+#### Alabasta/Loguetown
+Lakukan test menggunakan ```lynx www.super.franky.t13.com/public/images/PEPEGASfranky```. Jika benar maka akan ada prompt untuk download.
+
+
 
 ## Kendala yang Dialami
-1. Script nya sempat eror
+1. file /root/script.sh nya sempat error. Murni kesalahan saya karena beberapa command tidak menggunakan absolute path. Sisanya, aman.
