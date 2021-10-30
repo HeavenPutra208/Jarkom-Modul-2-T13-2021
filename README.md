@@ -199,24 +199,39 @@ Jangan lupa jalankan install2 pada soal no 1. Jika sudah bisa langsung testing
 
 ```ping franky.t13.com```
 
-![image](https://user-images.githubusercontent.com/73151823/139532512-30a34141-c360-4741-a946-e92a8682a522.png)
-
 ```ping www.franky.t13.com```
-
-![image](https://user-images.githubusercontent.com/73151823/139532546-5c52bef0-1f26-4470-ae11-b9921e7f717e.png)
 
 ```host -t CNAME www.franky.t13.com```
 
-![image](https://user-images.githubusercontent.com/73151823/139532590-31360a14-ce00-4129-9f4f-23560c972e75.png)
+![image](https://user-images.githubusercontent.com/73151823/139534369-a08e723e-af72-4ff5-b7cb-6f6da561bb0d.png)
+
 
 
 ## Soal 3
 Setelah itu buat subdomain super.franky.yyy.com dengan alias www.super.franky.yyy.com yang diatur DNS nya di EniesLobby dan mengarah ke Skypie.
 ### Penyelesaian
+#### EniesLobby
+menambah 3 line baru pada ```/etc/bind/kaizoku/franky.t13.com```
+```
+www     IN      CNAME   franky.t13.com.
+super   IN      A       10.48.2.4
+www.super     IN      CNAME   super.franky.t13.com.
+```
+#### Alabasta/Loguetown
+Jika sudah bisa langsung testing
+
+```ping super.franky.t13.com```
+
+```ping www.super.franky.t13.com```
+
+```host -t CNAME www.super.franky.t13.com```
+
+
 
 ## Soal 4
 Buat juga reverse domain untuk domain utama.
 ### Penyelesaian
+
 
 ## Soal 5
 Supaya tetap bisa menghubungi Franky jika server EniesLobby rusak, maka buat Water7 sebagai DNS Slave untuk domain utama.
