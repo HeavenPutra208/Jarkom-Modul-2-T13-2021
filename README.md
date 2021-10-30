@@ -30,10 +30,139 @@
 ## Soal 1
 Luffy adalah seorang yang akan jadi Raja Bajak Laut. Demi membuat Luffy menjadi Raja Bajak Laut, Nami ingin membuat sebuah peta, bantu Nami untuk membuat peta berikut:
 
-![image]()
+![image](https://user-images.githubusercontent.com/73151823/139530926-59de427a-47c8-420d-80c3-ca8934b17d65.png)
 
 EniesLobby akan dijadikan sebagai DNS Master, Water7 akan dijadikan DNS Slave, dan Skypie akan digunakan sebagai Web Server. Terdapat 2 Client yaitu Loguetown, dan Alabasta. Semua node terhubung pada router Foosha, sehingga dapat mengakses internet.
 ### Penyelesaian
+Pada no 1, kami buat topologi sesuai contoh:
+<br>
+![image](https://user-images.githubusercontent.com/73151823/139530988-894cbdc2-c804-4884-876f-218902626496.png)
+<br>
+Untuk router Foosha, konfigurasi nodenya seperti berikut:
+<br>
+``` 
+auto eth0
+iface eth0 inet dhcp
+
+auto eth1
+iface eth1 inet static
+	address 10.48.1.1
+	netmask 255.255.255.0
+
+auto eth2
+iface eth2 inet static
+	address 10.48.2.1
+	netmask 255.255.255.0
+```
+<br>
+Untuk konfigurasi node lainnya seperti berikut:
+<br>
+<br>
+Loguetown
+<br>
+
+```
+auto eth0
+iface eth0 inet static
+	address 10.48.1.2
+	netmask 255.255.255.0
+	gateway 10.48.1.1
+  
+ ```
+ 
+ Alabasta
+<br>
+```
+auto eth0
+iface eth0 inet static
+	address 10.48.1.3
+	netmask 255.255.255.0
+	gateway 10.48.1.1
+ ```
+ <br>
+ 
+ <br>
+ Karena Loguetown dan Alabasta digunakan sebagai client, install dnsutils
+ <br>
+ 
+ ```
+apt-get update
+apt-get install nano -y
+apt-get install dnsutils
+ ```
+ <br>
+ 
+ EniesLobby
+
+```
+auto eth0
+iface eth0 inet static
+	address 10.48.2.2
+	netmask 255.255.255.0
+	gateway 10.48.2.1
+ ```
+ 
+<br>
+
+<br>
+EniesLobby sebagai DNS Master
+
+```
+apt-get update
+apt-get install bind9 -y
+apt-get install nano -y
+```
+
+<br>
+
+Water7
+
+```
+auto eth0
+iface eth0 inet static
+	address 10.48.2.3
+	netmask 255.255.255.0
+	gateway 10.48.2.1
+ ```
+ <br>
+ 
+ <br>
+Water7 sebagai DNS Slave
+
+```
+apt-get update
+apt-get install bind9 -y
+apt-get install nano -y
+```
+ 
+ Skypie
+ 
+```
+auto eth0
+iface eth0 inet static
+	address 10.48.2.4
+	netmask 255.255.255.0
+	gateway 10.48.2.1
+ ```
+ <br>
+ 
+  <br>
+Skypie sebagai webserver
+
+```
+apt-get update
+apt-get install bind9 -y
+apt-get install nano -y
+apt-get install apache2
+apt-get install php
+apt-get install libapache2-mod-php7.0
+```
+ 
+ Kemudian, mengetikkan ```iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 10.48.0.0/16``` pada Foosha
+ <br>
+ Agar setiap node bisa mengakses internet, masukkan ```nameserver 192.168.122.1``` pada ```/etc/resolv/conf```
+ 
+ 
 
 
 ## Soal 2
