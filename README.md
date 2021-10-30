@@ -595,6 +595,24 @@ Jika sudah, lakukan test dengan ```lynx www.super.franky.t13.com/public```. Jika
 ## Soal 12
 Tidak hanya itu, Luffy juga menyiapkan error file 404.html pada folder /error untuk mengganti error kode pada apache.
 ### Penyelesaian
+#### Skypie
+buat file .htaccess pada ```/var/www/super.franky.t13.com/.htaccess``` dan tambahkan:
+```
+ErrorDocument 404 /error/404.html
+```
+Line tersebut mengarahkan error 404 ke file /error/404.html .  Untuk filenya sudah disiapkan dari github
+<br>
+Agar file .htaccess berjalan, tambahkan opsi berikut pada ```/etc/apache2/sites-available/super.franky.t13.com.conf```:
+```
+	<Directory /var/www/super.franky.t13.com>
+                Options +FollowSymLinks -Multiviews
+		AllowOverride All
+        </Directory>
+```
+
+#### Alabasta/Loguetown
+Lakukan testing dengan sengaja mengakses link sudah pasti mengarah ke 404, misalnya ```lynx www.super.franky.t13.com/publics```. Jika benar akan muncul pesan seperti ini
+
 
 ## Soal 13
 Luffy juga meminta Nami untuk dibuatkan konfigurasi virtual host. Virtual host ini bertujuan untuk dapat mengakses file asset www.super.franky.yyy.com/public/js menjadi www.super.franky.yyy.com/js.
