@@ -609,6 +609,7 @@ Agar file .htaccess berjalan, tambahkan opsi berikut pada ```/etc/apache2/sites-
 		AllowOverride All
         </Directory>
 ```
+restart apache ```service apache2 restart```
 
 #### Alabasta/Loguetown
 Lakukan testing dengan sengaja mengakses link sudah pasti mengarah ke 404, misalnya ```lynx www.super.franky.t13.com/publics```. Jika benar akan muncul pesan seperti ini
@@ -617,6 +618,16 @@ Lakukan testing dengan sengaja mengakses link sudah pasti mengarah ke 404, misal
 ## Soal 13
 Luffy juga meminta Nami untuk dibuatkan konfigurasi virtual host. Virtual host ini bertujuan untuk dapat mengakses file asset www.super.franky.yyy.com/public/js menjadi www.super.franky.yyy.com/js.
 ### Penyelesaian
+#### Skypie
+Tambah konfigurasi  alias pada ```/etc/apache2/sites-available/super.franky.t13.com.conf```
+```
+Alias "/js" "/var/www/super.franky.t13.com/public/js"
+```
+Jangan lupa restart apache ```service apache2 restart```
+
+#### Alabasta/Loguetown
+Gunakan ```lynx www.super.franky.t13.com/js```. Jika berhasil maka akan terlihat seperti ini
+
 
 ## Soal 14
 Dan Luffy meminta untuk web www.general.mecha.franky.yyy.com hanya bisa diakses dengan port 15000 dan port 15500.
